@@ -15,10 +15,43 @@ import { Link } from "wouter";
 
 const IGM_LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029095588/BEdzSyDEoMCiPARqcX9Dgc/igm-logo_3087f916.jpeg";
 
+type AppTarget = "igm" | "manager";
+
 export default function DeleteAccount() {
+  const [appTarget, setAppTarget] = useState<AppTarget>("igm");
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
 
-  const steps = [
+  const managerSteps = [
+    {
+      number: 1,
+      title: "개인정보 보호책임자에게 삭제 요청 이메일 발송",
+      description: "아래 이메일 주소로 계정 삭제를 요청하는 이메일을 보내주세요.",
+      detail: `이메일 주소: ${policyMeta.privacyOfficer.email}\n\n이메일 제목에 \"[IGM Manager] 계정 삭제 요청\"을 포함하고, 본문에 가입 시 사용한 아이디와 이름을 기재해 주세요.`,
+    },
+    {
+      number: 2,
+      title: "본인 확인 절차 진행",
+      description: "부정 삭제를 방지하기 위해 본인 확인 절차를 진행합니다.",
+      detail: "개인정보 보호책임자가 요청자의 본인 여부를 확인하기 위해 가입 시 등록한 이메일 또는 전화번호로 확인 연락을 드릴 수 있습니다.",
+    },
+    {
+      number: 3,
+      title: "계정 및 데이터 삭제 처리",
+      description: "본인 확인 완료 후, 계정과 관련 데이터가 삭제됩니다.",
+      detail: "본인 확인이 완료되면 요청일로부터 7일 이내에 계정 및 관련 데이터를 삭제 처리합니다. 삭제 완료 시 이메일로 결과를 안내드립니다.",
+    },
+  ];
+
+  const managerDeletedData = [
+    { category: "계정 정보", items: "아이디, 비밀번호, 이름, 이메일, 전화번호", timing: "요청 후 7일 이내 삭제" },
+    { category: "소속/현장 정보", items: "현장명, 소속(회사/카테고리) 정보, 역할(site_admin, category_admin, manager, master)", timing: "요청 후 7일 이내 삭제" },
+    { category: "기기·서비스 정보", items: "인증 토큰, 기기 ID, 푸시 알림 토큰(FCM)", timing: "요청 후 7일 이내 삭제" },
+  ];
+
+  const appLabel = appTarget === "manager" ? "IGM Manager" : "IGM";
+  const mailSubject = appTarget === "manager" ? "[IGM Manager] 계정 삭제 요청" : "[IGM] 계정 삭제 요청";
+
+  const steps = appTarget === "manager" ? managerSteps : [
     {
       number: 1,
       title: "개인정보 보호책임자에게 삭제 요청 이메일 발송",
@@ -39,7 +72,7 @@ export default function DeleteAccount() {
     },
   ];
 
-  const deletedData = [
+  const deletedData = appTarget === "manager" ? managerDeletedData : [
     { category: "계정 정보", items: "아이디, 비밀번호, 이름, 이메일", timing: "요청 후 7일 이내 삭제" },
     { category: "건강 데이터", items: "심박수(BPM), PPG 원신호, HRV 지표, 스트레스 지수", timing: "요청 후 7일 이내 삭제" },
     { category: "기기 정보", items: "블루투스 기기 정보, 스마트폰 기기 정보", timing: "요청 후 7일 이내 삭제" },
@@ -93,14 +126,50 @@ export default function DeleteAccount() {
             계정 및 데이터 삭제 요청
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-            IGM 앱 사용자는 언제든지 자신의 계정과 관련 데이터의 삭제를 요청할 수 있습니다.
+            {appLabel} 앱 사용자는 언제든지 자신의 계정과 관련 데이터의 삭제를 요청할 수 있습니다.
             아래 안내에 따라 삭제를 요청해 주시면, 신속하게 처리해 드리겠습니다.
           </p>
           <div className="flex items-center gap-2 mt-4 px-3 py-2 bg-muted/50 rounded-lg w-fit">
             <Shield className="w-4 h-4 text-primary/70" />
             <span className="text-xs text-muted-foreground">
-              앱 이름: <strong className="text-foreground">IGM</strong> | 개발자: <strong className="text-foreground">IGM (대표: {policyMeta.representative})</strong>
+              앱 이름: <strong className="text-foreground">{appLabel}</strong> | 개발자: <strong className="text-foreground">IGM (대표: {policyMeta.representative})</strong>
             </span>
+          </div>
+          {appTarget === "manager" && (
+            <p className="text-xs text-muted-foreground leading-relaxed mt-3 max-w-2xl">
+              IGM Manager 앱은 관리자용 앱으로 근로자의 건강 데이터를 직접 수집하지 않습니다.
+              근로자(워치)의 건강 데이터 삭제는 IGM 앱의 계정 삭제 절차를 통해 처리됩니다.
+            </p>
+          )}
+
+          {/* App Selector Tabs */}
+          <div className="mt-6 inline-flex p-1 bg-muted rounded-lg border border-border" role="tablist" aria-label="앱 선택">
+            <button
+              role="tab"
+              aria-selected={appTarget === "igm"}
+              onClick={() => {
+                setAppTarget("igm");
+                setExpandedStep(null);
+              }}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                appTarget === "igm" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              IGM
+            </button>
+            <button
+              role="tab"
+              aria-selected={appTarget === "manager"}
+              onClick={() => {
+                setAppTarget("manager");
+                setExpandedStep(null);
+              }}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                appTarget === "manager" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              IGM Manager
+            </button>
           </div>
         </motion.div>
 
@@ -155,7 +224,7 @@ export default function DeleteAccount() {
                       {step.number === 1 && (
                         <div className="mt-4 flex flex-col sm:flex-row gap-3">
                           <a
-                            href={`mailto:${policyMeta.privacyOfficer.email}?subject=[IGM] 계정 삭제 요청`}
+                            href={`mailto:${policyMeta.privacyOfficer.email}?subject=${encodeURIComponent(mailSubject)}`}
                             className="inline-flex items-center gap-2 px-4 py-2.5 bg-destructive text-destructive-foreground rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
                           >
                             <Mail className="w-4 h-4" />
