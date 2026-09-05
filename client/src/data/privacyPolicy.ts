@@ -243,7 +243,7 @@ export const policySections: PolicySection[] = [
   {
     id: "company-info",
     number: 14,
-    title: "사업자 정보",
+    title: "사업자 등록정보",
     content: `| 항목 | 내용 |
 |------|------|
 | 회사명 | IGM |
