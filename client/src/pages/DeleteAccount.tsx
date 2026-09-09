@@ -371,8 +371,10 @@ export default function DeleteAccount() {
               <p>이메일: {policyMeta.email} | 전화: {policyMeta.phone}</p>
             </div>
           </div>
-          <div className="mt-4 flex gap-4 text-[11px] text-muted-foreground/60">
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground/60">
             <Link href="/" className="hover:text-primary transition-colors">개인정보처리방침</Link>
+            <span>|</span>
+            <Link href="/igm-home" className="hover:text-primary transition-colors">자녀 앱 개인정보처리방침</Link>
             <span>|</span>
             <span>계정 삭제 요청</span>
           </div>

@@ -5,6 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import IgmHomePrivacyPolicy from "./pages/IgmHomePrivacyPolicy";
 import DeleteAccount from "./pages/DeleteAccount";
 
 
@@ -12,6 +13,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/igm-home" component={IgmHomePrivacyPolicy} />
       <Route path="/delete-account" component={DeleteAccount} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
