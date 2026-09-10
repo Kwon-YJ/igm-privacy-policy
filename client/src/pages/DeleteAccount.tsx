@@ -15,7 +15,7 @@ import { Link } from "wouter";
 
 const IGM_LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029095588/BEdzSyDEoMCiPARqcX9Dgc/igm-logo_3087f916.jpeg";
 
-type AppTarget = "igm" | "manager" | "igmhome";
+type AppTarget = "igm" | "manager" | "igmhome" | "igmhomemanager";
 
 export default function DeleteAccount() {
   const [appTarget, setAppTarget] = useState<AppTarget>("igm");
@@ -77,25 +77,59 @@ export default function DeleteAccount() {
     { category: "기기·서비스 정보", items: "워치 ID, MAC 주소, 스마트폰 기기 정보, 푸시 알림 토큰(FCM)", timing: "요청 후 7일 이내 삭제" },
   ];
 
+  const igmHomeManagerSteps = [
+    {
+      number: 1,
+      title: "개인정보 보호책임자에게 삭제 요청 이메일 발송",
+      description: "아래 이메일 주소로 계정 삭제를 요청하는 이메일을 보내주세요.",
+      detail: `이메일 주소: ${policyMeta.privacyOfficer.email}\n\n이메일 제목에 \"[IGM 보호자 앱] 계정 삭제 요청\"을 포함하고, 본문에 가입 시 사용한 아이디와 이름을 기재해 주세요.`,
+    },
+    {
+      number: 2,
+      title: "본인 확인 절차 진행",
+      description: "부정 삭제를 방지하기 위해 본인 확인 절차를 진행합니다.",
+      detail: "개인정보 보호책임자가 요청자의 본인 여부를 확인하기 위해 가입 시 등록한 이메일 또는 전화번호로 확인 연락을 드릴 수 있습니다.",
+    },
+    {
+      number: 3,
+      title: "계정 및 데이터 삭제 처리",
+      description: "본인 확인 완료 후, 계정과 관련 데이터가 삭제됩니다.",
+      detail: "본인 확인이 완료되면 요청일로부터 7일 이내에 계정 및 관련 데이터를 삭제 처리합니다. 삭제 완료 시 이메일로 결과를 안내드립니다.",
+    },
+  ];
+
+  const igmHomeManagerDeletedData = [
+    { category: "계정 정보", items: "아이디, 비밀번호, 이름, 이메일, 휴대폰 번호", timing: "요청 후 7일 이내 삭제" },
+    { category: "보호자 설정 정보", items: "초대 코드, 자녀 연결 정보, 스트레스 임계값/기준선 설정값, 안심존 설정", timing: "요청 후 7일 이내 삭제" },
+    { category: "기기·서비스 정보", items: "기기 ID, 푸시 알림 토큰(FCM), WebSocket 세션 기록", timing: "요청 후 7일 이내 삭제" },
+    { category: "열람한 자녀 건강 데이터", items: "심박수, 스트레스 지수, 체온, 위치 기록 등 (자녀 계정 소유 데이터)", timing: "보호자 계정 삭제 후에도 자녀 계정 삭제 시 별도 처리" },
+  ];
+
   const appLabel =
     appTarget === "manager"
       ? "IGM Manager"
       : appTarget === "igmhome"
         ? "IGM 자녀 앱(홈)"
-        : "IGM";
+        : appTarget === "igmhomemanager"
+          ? "IGM 보호자 앱"
+          : "IGM";
   const mailSubject =
     appTarget === "manager"
       ? "[IGM Manager] 계정 삭제 요청"
       : appTarget === "igmhome"
         ? "[IGM 자녀 앱] 계정 삭제 요청"
-        : "[IGM] 계정 삭제 요청";
+        : appTarget === "igmhomemanager"
+          ? "[IGM 보호자 앱] 계정 삭제 요청"
+          : "[IGM] 계정 삭제 요청";
 
   const steps =
     appTarget === "manager"
       ? managerSteps
       : appTarget === "igmhome"
         ? igmHomeSteps
-        : [
+        : appTarget === "igmhomemanager"
+          ? igmHomeManagerSteps
+          : [
     {
       number: 1,
       title: "개인정보 보호책임자에게 삭제 요청 이메일 발송",
@@ -121,7 +155,9 @@ export default function DeleteAccount() {
       ? managerDeletedData
       : appTarget === "igmhome"
         ? igmHomeDeletedData
-        : [
+        : appTarget === "igmhomemanager"
+          ? igmHomeManagerDeletedData
+          : [
     { category: "계정 정보", items: "아이디, 비밀번호, 이름, 이메일", timing: "요청 후 7일 이내 삭제" },
     { category: "건강 데이터", items: "심박수(BPM), PPG 원신호, HRV 지표, 스트레스 지수", timing: "요청 후 7일 이내 삭제" },
     { category: "기기 정보", items: "블루투스 기기 정보, 스마트폰 기기 정보", timing: "요청 후 7일 이내 삭제" },
@@ -196,6 +232,12 @@ export default function DeleteAccount() {
               만 14세 미만 자녀 계정의 삭제 요청은 법정대리인(보호자)이 진행해 주세요.
             </p>
           )}
+          {appTarget === "igmhomemanager" && (
+            <p className="text-xs text-muted-foreground leading-relaxed mt-3 max-w-2xl">
+              IGM 보호자 앱은 자녀의 건강·안전 상태를 모니터링하는 보호자용 앱입니다.
+              보호자 계정 삭제 시 자녀의 건강 데이터는 자녀 앱 계정의 삭제 절차에 따라 별도 처리됩니다.
+            </p>
+          )}
 
           {/* App Selector Tabs */}
           <div className="mt-6 inline-flex p-1 bg-muted rounded-lg border border-border" role="tablist" aria-label="앱 선택">
@@ -237,6 +279,19 @@ export default function DeleteAccount() {
               }`}
             >
               IGM 자녀 앱(홈)
+            </button>
+            <button
+              role="tab"
+              aria-selected={appTarget === "igmhomemanager"}
+              onClick={() => {
+                setAppTarget("igmhomemanager");
+                setExpandedStep(null);
+              }}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                appTarget === "igmhomemanager" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              IGM 보호자 앱
             </button>
           </div>
         </motion.div>
@@ -443,6 +498,8 @@ export default function DeleteAccount() {
             <Link href="/" className="hover:text-primary transition-colors">개인정보처리방침</Link>
             <span>|</span>
             <Link href="/igm-home" className="hover:text-primary transition-colors">자녀 앱 개인정보처리방침</Link>
+            <span>|</span>
+            <Link href="/igm-home-manager" className="hover:text-primary transition-colors">보호자 앱 개인정보처리방침</Link>
             <span>|</span>
             <span>계정 삭제 요청</span>
           </div>

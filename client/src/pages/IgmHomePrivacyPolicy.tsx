@@ -9,7 +9,7 @@ import {
   policyMetaIgmHome,
 } from "@/data/privacyPolicyIgmHome";
 import { parseContent } from "@/lib/policyContentParser";
-import { Shield, ChevronUp, Menu, X, Trash2, HeartPulse } from "lucide-react";
+import { Shield, ChevronUp, Menu, X, Trash2, HeartPulse, Users } from "lucide-react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -202,13 +202,20 @@ export default function IgmHomePrivacyPolicy() {
                 하기 위하여, 보호자 초대 코드로 가입하는 자녀 앱(이하 "본 앱")에
                 대하여 다음과 같이 개인정보처리방침을 수립·공개합니다.
               </p>
-              <div className="mt-3">
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
                 <Link
                   href="/"
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
                 >
                   <HeartPulse className="w-3.5 h-3.5" />
                   IGM(근로자용) 개인정보처리방침 보기
+                </Link>
+                <Link
+                  href="/igm-home-manager"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                >
+                  <Users className="w-3.5 h-3.5" />
+                  IGM 보호자 앱 개인정보처리방침 보기
                 </Link>
               </div>
               <div className="flex flex-wrap gap-4 mt-4 text-xs text-muted-foreground">
@@ -304,6 +311,13 @@ export default function IgmHomePrivacyPolicy() {
                   className="hover:text-primary transition-colors"
                 >
                   근로자용 개인정보처리방침
+                </Link>
+                <span>|</span>
+                <Link
+                  href="/igm-home-manager"
+                  className="hover:text-primary transition-colors"
+                >
+                  보호자 앱 개인정보처리방침
                 </Link>
                 <span>|</span>
                 <Link
