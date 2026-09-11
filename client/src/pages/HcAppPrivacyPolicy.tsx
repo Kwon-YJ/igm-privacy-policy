@@ -1,25 +1,20 @@
 /*
  * Design: "Legal Clarity" — same style as Home.tsx (Swiss typography legal document)
- * Privacy policy page for IGM 자녀 앱(홈) / igm_home
+ * Privacy policy page for IGM 건강 케어 앱 / hc_app
  */
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import {
-  policySectionsIgmHome,
-  policyMetaIgmHome,
-} from "@/data/privacyPolicyIgmHome";
+import { policySectionsHcApp, policyMetaHcApp } from "@/data/privacyPolicyHcApp";
 import { parseContent } from "@/lib/policyContentParser";
-import { Shield, ChevronUp, Menu, X, Trash2, HeartPulse, Users, Activity } from "lucide-react";
+import { Shield, ChevronUp, Menu, X, Trash2, Activity } from "lucide-react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 
 const IGM_LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310419663029095588/BEdzSyDEoMCiPARqcX9Dgc/igm-logo_3087f916.jpeg";
 
-export default function IgmHomePrivacyPolicy() {
-  const [activeSection, setActiveSection] = useState(
-    policySectionsIgmHome[0].id
-  );
+export default function HcAppPrivacyPolicy() {
+  const [activeSection, setActiveSection] = useState(policySectionsHcApp[0].id);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -28,8 +23,8 @@ export default function IgmHomePrivacyPolicy() {
     const scrollY = window.scrollY;
     setShowScrollTop(scrollY > 400);
 
-    let currentSection = policySectionsIgmHome[0].id;
-    for (const section of policySectionsIgmHome) {
+    let currentSection = policySectionsHcApp[0].id;
+    for (const section of policySectionsHcApp) {
       const el = sectionRefs.current[section.id];
       if (el) {
         const rect = el.getBoundingClientRect();
@@ -73,7 +68,7 @@ export default function IgmHomePrivacyPolicy() {
               />
               <div>
                 <h1 className="text-base font-bold text-foreground tracking-tight">
-                  IGM 자녀 앱(홈)
+                  IGM 건강 케어 앱
                 </h1>
                 <p className="text-[11px] text-muted-foreground -mt-0.5">
                   개인정보처리방침
@@ -83,7 +78,7 @@ export default function IgmHomePrivacyPolicy() {
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground">
                 <Shield className="w-3.5 h-3.5" />
-                <span>시행일: {policyMetaIgmHome.effectiveDate}</span>
+                <span>시행일: {policyMetaHcApp.effectiveDate}</span>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -112,7 +107,7 @@ export default function IgmHomePrivacyPolicy() {
             className="fixed inset-x-0 top-16 z-40 lg:hidden bg-background border-b border-border shadow-lg max-h-[60vh] overflow-y-auto"
           >
             <nav className="p-4 space-y-0.5">
-              {policySectionsIgmHome.map((section) => (
+              {policySectionsHcApp.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
@@ -142,7 +137,7 @@ export default function IgmHomePrivacyPolicy() {
                 목차
               </p>
               <nav className="sidebar-scroll space-y-0.5 max-h-[calc(100vh-140px)] overflow-y-auto pr-2">
-                {policySectionsIgmHome.map((section) => {
+                {policySectionsHcApp.map((section) => {
                   const isActive = activeSection === section.id;
                   return (
                     <button
@@ -194,12 +189,12 @@ export default function IgmHomePrivacyPolicy() {
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight mb-3">
-                IGM 자녀 앱(홈) 개인정보처리방침
+                IGM 건강 케어 앱 개인정보처리방침
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
                 IGM은 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를
                 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록
-                하기 위하여, 보호자 초대 코드로 가입하는 자녀 앱(이하 "본 앱")에
+                하기 위하여, 웨어러블 워치 기반 건강 케어 앱(이하 "본 앱")에
                 대하여 다음과 같이 개인정보처리방침을 수립·공개합니다.
               </p>
               <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
@@ -207,36 +202,36 @@ export default function IgmHomePrivacyPolicy() {
                   href="/"
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
                 >
-                  <HeartPulse className="w-3.5 h-3.5" />
+                  <Shield className="w-3.5 h-3.5" />
                   IGM(근로자용) 개인정보처리방침 보기
+                </Link>
+                <Link
+                  href="/igm-home"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                >
+                  <Activity className="w-3.5 h-3.5" />
+                  IGM 자녀 앱(홈) 개인정보처리방침 보기
                 </Link>
                 <Link
                   href="/igm-home-manager"
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
                 >
-                  <Users className="w-3.5 h-3.5" />
-                  IGM 보호자 앱 개인정보처리방침 보기
-                </Link>
-                <Link
-                  href="/hc-app"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
-                >
                   <Activity className="w-3.5 h-3.5" />
-                  IGM 건강 케어 앱 개인정보처리방침 보기
+                  IGM 보호자 앱 개인정보처리방침 보기
                 </Link>
               </div>
               <div className="flex flex-wrap gap-4 mt-4 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5">
                   <Shield className="w-3.5 h-3.5 text-primary/70" />
-                  시행일: {policyMetaIgmHome.effectiveDate}
+                  시행일: {policyMetaHcApp.effectiveDate}
                 </span>
-                <span>최종 수정일: {policyMetaIgmHome.lastUpdated}</span>
+                <span>최종 수정일: {policyMetaHcApp.lastUpdated}</span>
               </div>
             </motion.div>
 
             {/* Sections */}
             <div className="space-y-0">
-              {policySectionsIgmHome.map((section, index) => (
+              {policySectionsHcApp.map((section, index) => (
                 <motion.section
                   key={section.id}
                   ref={(el) => {
@@ -247,7 +242,7 @@ export default function IgmHomePrivacyPolicy() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.4, delay: 0.05 }}
                   className={`py-8 ${
-                    index < policySectionsIgmHome.length - 1
+                    index < policySectionsHcApp.length - 1
                       ? "border-b border-border/60"
                       : ""
                   }`}
@@ -276,8 +271,8 @@ export default function IgmHomePrivacyPolicy() {
                     계정 및 데이터 삭제 요청
                   </h3>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-                    자녀 앱 계정과 관련 데이터의 삭제를 원하시면 아래 링크에서
-                    삭제 절차를 확인하실 수 있습니다.
+                    건강 케어 앱 계정과 관련 데이터의 삭제를 원하시면 아래
+                    링크에서 삭제 절차를 확인하실 수 있습니다.
                   </p>
                   <Link
                     href="/delete-account"
@@ -301,23 +296,27 @@ export default function IgmHomePrivacyPolicy() {
                 <div className="text-xs text-muted-foreground space-y-1">
                   <p className="font-semibold text-foreground/70">IGM</p>
                   <p>
-                    대표: {policyMetaIgmHome.representative} |
-                    사업자등록번호: {policyMetaIgmHome.businessNumber}
+                    대표: {policyMetaHcApp.representative} | 사업자등록번호:{" "}
+                    {policyMetaHcApp.businessNumber}
                   </p>
                   <p>
-                    이메일: {policyMetaIgmHome.email} | 전화:{" "}
-                    {policyMetaIgmHome.phone}
+                    이메일: {policyMetaHcApp.email} | 전화:{" "}
+                    {policyMetaHcApp.phone}
                   </p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground/60">
                 <span>개인정보처리방침</span>
                 <span>|</span>
+                <Link href="/" className="hover:text-primary transition-colors">
+                  근로자용 개인정보처리방침
+                </Link>
+                <span>|</span>
                 <Link
-                  href="/"
+                  href="/igm-home"
                   className="hover:text-primary transition-colors"
                 >
-                  근로자용 개인정보처리방침
+                  자녀 앱 개인정보처리방침
                 </Link>
                 <span>|</span>
                 <Link
@@ -325,13 +324,6 @@ export default function IgmHomePrivacyPolicy() {
                   className="hover:text-primary transition-colors"
                 >
                   보호자 앱 개인정보처리방침
-                </Link>
-                <span>|</span>
-                <Link
-                  href="/hc-app"
-                  className="hover:text-primary transition-colors"
-                >
-                  건강 케어 앱 개인정보처리방침
                 </Link>
                 <span>|</span>
                 <Link

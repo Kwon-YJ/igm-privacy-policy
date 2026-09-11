@@ -10,7 +10,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { policySections, policyMeta } from "@/data/privacyPolicy";
 import { parseContent } from "@/lib/policyContentParser";
-import { Shield, ChevronUp, Menu, X, Trash2, Users } from "lucide-react";
+import { Shield, ChevronUp, Menu, X, Trash2, Users, Activity } from "lucide-react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -200,6 +200,13 @@ export default function Home() {
                   <Users className="w-3.5 h-3.5" />
                   IGM 보호자 앱 개인정보처리방침 보기
                 </Link>
+                <Link
+                  href="/hc-app"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                >
+                  <Activity className="w-3.5 h-3.5" />
+                  IGM 건강 케어 앱 개인정보처리방침 보기
+                </Link>
               </div>
               <div className="flex flex-wrap gap-4 mt-4 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5">
@@ -276,6 +283,8 @@ export default function Home() {
                 <Link href="/igm-home" className="hover:text-primary transition-colors">자녀 앱 개인정보처리방침</Link>
                 <span>|</span>
                 <Link href="/igm-home-manager" className="hover:text-primary transition-colors">보호자 앱 개인정보처리방침</Link>
+                <span>|</span>
+                <Link href="/hc-app" className="hover:text-primary transition-colors">건강 케어 앱 개인정보처리방침</Link>
                 <span>|</span>
                 <Link href="/delete-account" className="hover:text-primary transition-colors">계정 삭제 요청</Link>
               </div>
