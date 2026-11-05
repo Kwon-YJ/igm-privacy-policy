@@ -198,3 +198,14 @@ PWA의 서비스 워커는 앱 실행용 정적 파일을 기기에 캐시할 �
 앱의 가입 시 확인하는 안내와 버전·확인 기록은 서버에서 별도로 관리합니다. 외부 페이지를 열었다는 사실만으로 동의가 완료되거나 기존 가입 확인 기록이 변경되지 않습니다.`,
   },
 ];
+
+// Public, credential-free data for the three PWAs' in-app reader. Same source as this site's page.
+export const attendancePolicyDocument = {
+  schemaVersion: 1,
+  title: "공수달력 개인정보 처리방침",
+  version: policyMetaAttendance.version,
+  status: policyMetaAttendance.status,
+  effectiveDate: policyMetaAttendance.effectiveDate,
+  lastUpdated: policyMetaAttendance.lastUpdated,
+  sections: policySectionsAttendance,
+};

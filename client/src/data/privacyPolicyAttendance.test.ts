@@ -4,6 +4,7 @@ import { policyMeta } from "./privacyPolicy";
 import {
   policyMetaAttendance as meta,
   policySectionsAttendance as sections,
+  attendancePolicyDocument,
 } from "./privacyPolicyAttendance";
 
 const content = (id: string) => {
@@ -11,6 +12,25 @@ const content = (id: string) => {
   assert.ok(section, `Missing section: ${id}`);
   return section.content;
 };
+
+test("PWA 공개 데이터는 웹페이지와 동일한 버전·본문을 사용하고 인증 정보가 없다", () => {
+  assert.equal(attendancePolicyDocument.schemaVersion, 1);
+  assert.equal(attendancePolicyDocument.version, meta.version);
+  assert.equal(attendancePolicyDocument.status, meta.status);
+  assert.deepEqual(attendancePolicyDocument.sections, sections);
+  assert.deepEqual(
+    Object.keys(attendancePolicyDocument).sort(),
+    [
+      "schemaVersion",
+      "title",
+      "version",
+      "status",
+      "effectiveDate",
+      "lastUpdated",
+      "sections",
+    ].sort()
+  );
+});
 
 test("공수달력 공통 방침은 세 앱을 구분하고 고유한 목차·버전을 갖는다", () => {
   assert.equal(
