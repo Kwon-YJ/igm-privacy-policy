@@ -9,7 +9,7 @@ import IgmHomePrivacyPolicy from "./pages/IgmHomePrivacyPolicy";
 import IgmHomeManagerPrivacyPolicy from "./pages/IgmHomeManagerPrivacyPolicy";
 import HcAppPrivacyPolicy from "./pages/HcAppPrivacyPolicy";
 import DeleteAccount from "./pages/DeleteAccount";
-
+import AttendancePrivacyPolicy from "./pages/AttendancePrivacyPolicy";
 
 function Router() {
   return (
@@ -18,6 +18,7 @@ function Router() {
       <Route path="/igm-home" component={IgmHomePrivacyPolicy} />
       <Route path="/igm-home-manager" component={IgmHomeManagerPrivacyPolicy} />
       <Route path="/hc-app" component={HcAppPrivacyPolicy} />
+      <Route path="/attendance" component={AttendancePrivacyPolicy} />
       <Route path="/delete-account" component={DeleteAccount} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

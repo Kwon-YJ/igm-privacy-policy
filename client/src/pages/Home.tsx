@@ -207,6 +207,13 @@ export default function Home() {
                   <Activity className="w-3.5 h-3.5" />
                   IGM 건강 케어 앱 개인정보처리방침 보기
                 </Link>
+                <Link
+                  href="/attendance"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                >
+                  <Shield className="w-3.5 h-3.5" />
+                  공수달력(근로자·매니저·관리자) 개인정보 처리방침 보기
+                </Link>
               </div>
               <div className="flex flex-wrap gap-4 mt-4 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5">
@@ -285,6 +292,8 @@ export default function Home() {
                 <Link href="/igm-home-manager" className="hover:text-primary transition-colors">보호자 앱 개인정보처리방침</Link>
                 <span>|</span>
                 <Link href="/hc-app" className="hover:text-primary transition-colors">건강 케어 앱 개인정보처리방침</Link>
+                <span>|</span>
+                <Link href="/attendance" className="hover:text-primary transition-colors">공수달력 개인정보 처리방침</Link>
                 <span>|</span>
                 <Link href="/delete-account" className="hover:text-primary transition-colors">계정 삭제 요청</Link>
               </div>
