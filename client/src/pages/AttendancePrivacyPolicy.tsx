@@ -58,7 +58,7 @@ export default function AttendancePrivacyPolicy() {
             <span>
               <span className="block text-base font-bold">IGM 공수달력</span>
               <span className="block text-[11px] text-muted-foreground">
-                근로자 · 매니저 · 관리자
+                기술인 · 팀장 · 사업주
               </span>
             </span>
           </Link>
@@ -112,7 +112,7 @@ export default function AttendancePrivacyPolicy() {
               공수달력 개인정보 처리방침
             </h1>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              근로자·매니저·관리자 세 앱과 공통 API에 적용되는 안내입니다.
+              기술인·팀장·사업주 세 앱과 공통 API에 적용되는 안내입니다.
               건강·안전관리용 IGM 앱의 방침과 구분됩니다.
             </p>
             <div className="mt-4 flex flex-wrap gap-3 text-xs text-muted-foreground">
@@ -123,34 +123,10 @@ export default function AttendancePrivacyPolicy() {
                 />
                 {meta.status}
               </span>
-              <span>최종 작성: {meta.lastUpdated}</span>
+              <span>최종 수정: {meta.lastUpdated}</span>
               <span>시행일: {meta.effectiveDate}</span>
             </div>
           </div>
-
-          <section
-            aria-labelledby="attendance-policy-review-title"
-            className="p-5 sm:p-6 mb-8 bg-primary/5 border border-primary/20 rounded-xl"
-          >
-            <h2
-              id="attendance-policy-review-title"
-              className="text-base font-bold mb-2"
-            >
-              공개 서비스 시행 전 검토 필요
-            </h2>
-            <p className="text-sm leading-relaxed text-foreground/85">
-              현재 기능 기준으로 작성한 개발·검토본입니다. 업무 이력 3년·탈퇴 후
-              연락처 30일은 미확정 운영안이며 자동 파기를 보장하지 않습니다.
-              기록별 보관 근거, 위탁·국외 이전, 운영자 지정과 필요한 동의는 정식
-              시행 전에 확정해야 합니다.
-            </p>
-            <a
-              href="#retention"
-              className="inline-block mt-3 text-sm font-semibold text-primary underline underline-offset-4"
-            >
-              보유기간·탈퇴 안내 확인
-            </a>
-          </section>
 
           {sections.map(section => (
             <section
@@ -174,7 +150,7 @@ export default function AttendancePrivacyPolicy() {
                 </h2>
               </div>
               <div
-                className={`sm:pl-12 break-words ${["items", "retention", "cookies"].includes(section.id) ? "[&_table]:min-w-[32rem]" : ""}`}
+                className={`sm:pl-12 break-words ${["items", "processors", "retention", "cookies"].includes(section.id) ? "[&_table]:min-w-[32rem]" : ""}`}
               >
                 {parseContent(section.content)}
               </div>
@@ -203,7 +179,7 @@ export default function AttendancePrivacyPolicy() {
 
           <footer className="mt-12 pt-6 border-t border-border text-xs text-muted-foreground space-y-3">
             <p>
-              IGM · 대표 {meta.representative} · 사업자등록번호{" "}
+              {meta.companyName} · 대표 {meta.representative} · 사업자등록번호{" "}
               {meta.businessNumber}
             </p>
             <p>

@@ -1,15 +1,21 @@
+import { readFileSync } from "node:fs";
 import type { Plugin } from "vite";
-import { attendancePolicyDocument } from "../client/src/data/privacyPolicyAttendance";
+
+const policyFile = new URL(
+  "../client/src/data/attendance-policy.json",
+  import.meta.url
+);
 
 export function attendancePolicyData(): Plugin {
-  const body = JSON.stringify(attendancePolicyDocument);
   return {
     name: "attendance-policy-public-document",
     generateBundle() {
+      // Emit the issued bytes as-is so the published SHA-256 stays identical
+      // to the reviewed source document.
       this.emitFile({
         type: "asset",
         fileName: "attendance-policy.json",
-        source: body,
+        source: readFileSync(policyFile),
       });
     },
     configureServer(server) {
@@ -27,7 +33,9 @@ export function attendancePolicyData(): Plugin {
           "Cache-Control": "no-store",
           "X-Content-Type-Options": "nosniff",
         });
-        response.end(request.method === "HEAD" ? undefined : body);
+        response.end(
+          request.method === "HEAD" ? undefined : readFileSync(policyFile)
+        );
       });
     },
   };
